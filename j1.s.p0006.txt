@@ -1,0 +1,87 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package j1.s.p0006;
+import java.util.Random;
+import java.util.Scanner;
+/**
+ *
+ * @author TuanAnhh
+ */
+public class BinarySearch {
+
+    public void displayArray(int[] arr) {
+        System.out.print("[");
+        for (int i = 0; i < arr.length; i++) { //xét duyệt phần tử từ 0->số lượng phần tử ar
+            System.out.print(arr[i]);           //hiển thị ra các phần tử
+            if (i < arr.length - 1) {           //in ra dấu phẩy trừ phần tử cuối cùng
+                System.out.print(", ");
+            }
+        }
+        System.out.print("]");
+    }
+    
+    /**
+     *
+     * @param arr the array
+     */
+    public void bubbleSort(int[] arr) {
+        boolean swapped = true;         //để đổi giá trị là đúng thì tiếp tục sắp xếp
+        int j = 0;
+        int tmp;
+        while (swapped) {               //Kiểm tra xem đã đúng chưa nếu false sẽ out ra
+            swapped = false;
+            j++;
+            for (int i = 0; i < arr.length - j; i++) {  //để chạy từ đầu đến cuối mảng
+                if (arr[i] > arr[i + 1]) {      //nếu mà giá trị trước lớn hơn sau thì tiếp tục
+                    tmp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = tmp;           // đổi vị trí cho giá trị
+                    swapped = true;             
+                }
+            }
+        }
+    }
+    int binarySearch(int[] array, int value, int left, int right) { 
+        if (left > right) {
+            return -1;
+        }
+        int middle = (left + right) / 2;
+        if (array[middle] == value) {
+            return middle;
+        } else if (array[middle] > value) {
+            return binarySearch(array, value, left, middle - 1);
+        } else {
+            return binarySearch(array, value, middle + 1, right);
+        }
+    }
+    
+        public void length(int[] array){
+        for (int i = 0; i < array.length; i++) {    //để biết kích cỡ của mảng để nhập vào
+            array[i] = new Random().nextInt(10)+1;  //để chọn số ngẫu nhiên ghi vào array
+      }
+        }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BinarySearch searcher = new BinarySearch();
+        
+        System.out.println("Enter number of array:");//Nhập số phần tử trong array
+        int length = scanner.nextInt();             //truyền dữ liệu vào length
+        int[] array = new int[length];              //đặt tên 
+        searcher.length(array);                     //gọi hàm length để xét duyệt phần tử   
+        
+        System.out.println("Enter search value:");
+        int search = scanner.nextInt();             //lấy giá trị để tìm kiếm
+        searcher.bubbleSort(array);                 
+        
+        System.out.print("Sorted array: ");        
+        searcher.displayArray(array);               //hiển thi array đã sắp xếp
+        
+        int foundIndex = searcher.binarySearch(array, search, 0, length - 1);   //dùng search vào hàm để tìm kiếm
+        System.out.println("\nFound " + search + " at index: " + foundIndex);   //in ra giá trị của nó
+    }
+    
+}
